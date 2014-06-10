@@ -8,6 +8,11 @@ module.exports = function (grunt) {
   // Configure tasks
   grunt.initConfig({
 
+    // Project settings
+    project: {
+      app: 'app'
+    },
+
     // Watch files and execute tasks when they change
     watch: {
       livereload: {
@@ -15,7 +20,7 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '*.html'
+          '<%= project.app %>/*.html'
         ]
       }
     },
@@ -29,14 +34,15 @@ module.exports = function (grunt) {
       },
       livereload: {
         options: {
-          open: true
+          open: true,
+          base: '<%= project.app %>'
         }
       }
     },
 
     wiredep: {
       app: {
-        src: ['index.html']
+        src: ['<%= project.app %>/index.html']
       }
     }
   });
