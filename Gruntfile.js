@@ -15,6 +15,10 @@ module.exports = function (grunt) {
 
     // Watch files and execute tasks when they change
     watch: {
+      bower: {
+        files: ['bower.json'],
+        tasks: ['wiredep']
+      },
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
