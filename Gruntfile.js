@@ -32,8 +32,14 @@ module.exports = function (grunt) {
           open: true
         }
       }
+    },
+
+    wiredep: {
+      app: {
+        src: ['index.html']
+      }
     }
   });
 
-  grunt.registerTask('serve', ['connect:livereload', 'watch']);
+  grunt.registerTask('serve', ['wiredep', 'connect:livereload', 'watch']);
 };
