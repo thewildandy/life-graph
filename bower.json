@@ -1,0 +1,10 @@
+{
+  "name": "life-graph",
+  "version": "0.0.0",
+  "homepage": "https://github.com/thewildandy/life-graph",
+  "authors": [
+    "Andy Wild <thewildandy@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true
+}
