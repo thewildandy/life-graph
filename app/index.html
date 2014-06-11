@@ -5,11 +5,21 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- endbower -->
+
+    <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
     <div class="container">
       <h1 class="page-header">thewildandy / life graph <small>~ a 90 year human life represented in one week blocks</small></h1>
+
+      <div class="graph-container">
+        <svg id="graph"></svg>
+        <p class="text-center">
+          <small><i>Shaded blocks indicate weeks that have passed since my <abbr title="20/04/1990">date of birth</abbr>.</i></small>
+        </p>
+      </div>
     </div>
+
     <footer>
       <p class="text-center">Made with <span class="glyphicon glyphicon-heart"></span> by <a href="https://twitter.com/">thewildandy</a></p>
     </footer>
@@ -17,6 +27,49 @@
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
     <!-- endbower -->
+
+    <script>
+      var width = 414
+          height = 718
+          cellSize = 6
+          cellSpacing = 2
+          dateOfBirth = new Date(1990, 4, 20)
+          today = new Date();
+
+      var weeksSinceBirth = d3.time.weeks(dateOfBirth, today).length;
+
+      var svg = d3.select("#graph")
+          .attr("height", height)
+          .attr("width", width);
+
+      var g = svg.selectAll("g").data(d3.range(1, 90)).enter()
+          .append("g")
+            .attr("class", "year")
+            .attr("transform", function(d) {
+              return "translate(0, " + d * (cellSize + cellSpacing) + ")";
+            });
+
+      var rect = g.selectAll(".week").data(d3.range(0, 52)).enter()
+          .append("rect")
+            .attr("class", "week")
+            .attr("height", cellSize - 2)
+            .attr("width", cellSize - 2)
+            .attr("stroke", "#333")
+            .attr("x", function(d) { return d * (cellSize + cellSpacing) })
+            .attr("fill", "#fff")
+            .attr("shape-rendering", "crispedges");
+
+      svg.selectAll(".week").each(function(d, i) {
+        var week = d3.select(this);
+
+        week.attr("title", "Week " + (i + 1));
+
+        if(i < weeksSinceBirth) {
+          week.attr("fill", "#333");
+        }
+      });
+    </script>
   </body>
 </html>
